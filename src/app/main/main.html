@@ -1,0 +1,20 @@
+<div class="row-fluid">
+  <div gridster>
+    <ul>
+      <li gridster-item="article" ng-repeat="article in articles">
+        <p><strong data-ng-bind-html="article.item.title"></strong></p>
+        <p><span class="label" data-ng-bind="article.item.label" data-ng-show="article.item.label"></span></p>
+        <p data-ng-bind-html="article.item.body"></p>
+
+        <p><a ng-href="{{article.item.url}}">{{article.item.url}}</a></p>
+
+        <div class="button-bar right-aligned">
+          <ul class="button-group">
+            <li><a class="button tiny"><i class="fa fa-edit"></i> Edit</a></li>
+            <li><a class="button tiny"><i class="fa fa-forward"></i> Forward</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
