@@ -5,6 +5,7 @@ module.exports = function(config) {
   config.set({
     autoWatch : false,
     colors: true,
+    browserNoActivityTimeout: 20000,
 
     frameworks: ['jasmine', 'jasmine-matchers'],
     preprocessors: {

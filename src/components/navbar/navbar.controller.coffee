@@ -1,3 +1,3 @@
-angular.module "dNotz"
-.controller "NavbarCtrl", ($scope) ->
+angular.module 'dNotez'
+.controller 'NavbarCtrl', ($scope) ->
   $scope.date = new Date()

@@ -1,47 +1,97 @@
-angular.module "dNotz"
+angular.module "dNotez"
 .controller "MainCtrl", ($scope, Restangular) ->
-  $scope.articles = [
+  $scope.notes = [
   ]
-  Restangular.allUrl 'articles', '/api/articles'
-  .getList {pageSize: 20}
-  .then (articles) ->
-    #if true then return
-    $scope.articles.length = 0
-    seg = row = col = 0
-    for article in articles
-      article.col = col
-      article.row = row
-      if article.item.body.length > 300
-        if article.item.body.length > 500
-          article.item.longText = true
-          article.item.fullText = article.item.body
-          article.item.body = article.item.body.substring(0, 500)
-        article.sizeX = 3
-        article.sizeY = 2
-        row += 2
-        seg += 3
-        col += 3
-      else if article.item.body.length > 100
-        article.sizeX = 3
-        article.sizeY = 1
-        seg += 3
-        col += 3
-      else if article.item.body.length > 20
-        article.sizeX = 2
-        article.sizeY = 1
-        seg += 2
-        col += 2
+
+  ###
+  simple best-fit layout algorithm:
+  items = []
+  for each note in notes
+    dimension = calcArticleDimension(note)
+    note.pos = findBestPosition(items, dimension)
+    items.push(note)
+
+  findBestPosition(items, dimension) :
+    position = (0,0)
+    for i in items
+
+      if i.overlapWith(position, dimension)
+        pos.x = i.x + i.w
+        if pos.x >= MAX_WIDTH
+          pos.y++
+
+  ###
+  $scope.layoutNotes = (notes) ->
+    $scope.notes.length = 0
+    items = []
+    calculateArticleDimension = (note) ->
+      if note.item.body.length > 300
+        #fixthis: this has no effect on item array
+        if note.item.body.length > 500
+          note.item.longText = true
+          note.item.fullText = note.item.body
+          note.item.body = note.item.body.substring(0, 500)
+        return [3, 2]
+      else if note.item.body.length > 100
+        return [3, 1]
+      else if note.item.body.length > 20
+        return [2, 1]
       else
-        article.sizeX = 1
-        article.sizeY = 1
-        seg += 1
-        col += 1
-      console.log 'col:', article.col, ', row:', article.row, ', sizeX:', article.sizeX, ', seg:', seg
-      $scope.articles.push article
-      if seg % 6 == 0
-        col = 0
-        row += 1
+        return [1, 1]
+
+    # t stands for tile, move tile until find best position
+    findBestPosition = (tw, th) ->
+      tx = 0
+      ty = 0
+      j = 0
+      i = 0
+      console.log 'finding position, len=' + items.length
+      while i < items.length
+        xi = items[i].col
+        yi = items[i].row
+        wi = items[i].sizeX
+        hi = items[i].sizeY
+        console.log 'pos: i=' + i + ', j=' + j + ', (tx,ty)=' + tx + ',' + ty
+        console.log 'item[' + i + '] (x,y)=' + xi + ',' + yi + ', [w,h]=' + wi + ',' + hi
+        # X1+W1<X2 or X2+W2<X1 or Y1+H1<Y2 or Y2+H2<Y1
+        if (tx + tw) <= xi or (xi + wi) <= tx or (ty + th) <= yi or (yi + hi) <= ty
+          # no intersection
+          console.log 'continue, no intersection'
+          #return [tx, ty]
+        else
+          #move tile to the right edge of item i and check boundaries
+          tx += wi
+          console.log 'intersection, checking move to right ..., new tx=' + tx
+          if (tx + tw) > 6 # passing right edge?
+            console.log 'move to the begging of the next row, i=' + i + ', j=' + j
+            #move back to the beginning of the row
+            #move tile row to the bottom of the first tile in the row
+            ty += 1
+            tx = 0
+            j = 0
+            i -= (j + 2)
+          else
+            #increase number of passed items
+            j++
+        i++
+      return [tx, ty]
+
+    for note, index in notes
+      dimension = calculateArticleDimension(note)
+      note.sizeX = dimension[0]
+      note.sizeY = dimension[1]
+      position = findBestPosition(note.sizeX, note.sizeY)
+      note.col = position[0]
+      note.row = position[1]
+      items.push note
+      console.log 'note[' + index + ']:', note.item.title, 'body.len:' + note.item.body.length, 'dim:', dimension, 'pos:', position
+      $scope.notes.push note
     return
+
+  Restangular.allUrl 'notes', '/api/articles'
+  .getList {pageSize: 20}
+  .then (notes) ->
+    $scope.layoutNotes(notes)
 
   $scope.gridsterOpts = {
     margins: [20, 20],

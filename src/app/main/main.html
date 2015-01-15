@@ -1,13 +1,20 @@
 <div class="row-fluid">
   <div gridster>
     <ul>
-      <li gridster-item="article" ng-repeat="article in articles">
-        <p><strong data-ng-bind-html="article.item.title"></strong></p>
-        <p><span class="label" data-ng-bind="article.item.label" data-ng-show="article.item.label"></span></p>
-        <p data-ng-bind-html="article.item.body"></p>
+      <li gridster-item="note" ng-repeat="note in notes">
+        <p><strong data-ng-bind-html="note.item.title"></strong></p>
 
-        <p><a ng-href="{{article.item.url}}">{{article.item.url}}</a></p>
+        <p><span class="label" data-ng-bind="note.item.label" data-ng-show="note.item.label"></span></p>
 
+        <p data-ng-bind-html="note.item.body"></p>
+
+        <p><a ng-href="{{note.item.url}}">{{note.item.url}}</a></p>
+
+        <div>
+          seg:<span data-ng-bind="note.seg"></span>
+          , row:<span data-ng-bind="note.row"></span>
+          , col:<span data-ng-bind="note.col"></span>
+        </div>
         <div class="button-bar right-aligned">
           <ul class="button-group">
             <li><a class="button tiny"><i class="fa fa-edit"></i> Edit</a></li>

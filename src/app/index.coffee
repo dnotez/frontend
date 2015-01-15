@@ -1,4 +1,5 @@
-angular.module "dNotz", ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router', 'mm.foundation',
+angular.module "dNotez", ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router',
+                          'mm.foundation',
                          'gridster']
 .config ($stateProvider, $urlRouterProvider) ->
   $stateProvider
