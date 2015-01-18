@@ -49,7 +49,7 @@ gulp.task('injector:css', ['styles'], function () {
 });
 
 gulp.task('scripts', function () {
-  return gulp.src('src/{app,components}/**/*.coffee')
+  return gulp.src(['src/{app,components}/**/*.coffee', '!src/{app,components}/**/*.spec.coffee'])
     .pipe($.coffeelint())
     .pipe($.coffeelint.reporter())
     .pipe($.coffee())
@@ -145,7 +145,7 @@ gulp.task('misc', function () {
 });
 
 gulp.task('clean', function (done) {
-  $.del(['dist/', '.tmp/'], done);
+  $.del(['dist/', '.tmp/', 'build'], done);
 });
 
 gulp.task('build', ['html', 'images', 'fonts', 'misc']);

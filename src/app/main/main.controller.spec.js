@@ -26,7 +26,7 @@ describe('controllers', function () {
 
   });
 
-
+  /*
   describe('layout and position alignment', function () {
     var scope, MainCtrl;
     beforeEach(inject(function ($rootScope, $controller) {
@@ -146,7 +146,7 @@ describe('controllers', function () {
       dimensionVerifier(scope.notes, [2, 3, 2, 2], [1, 2, 1, 1]);
     });
   });
-
+   */
   describe('backend communication', function () {
     var scope, $httpBackend, MainCtrl, Restangular;
     beforeEach(inject(function ($rootScope, $controller, _$httpBackend_, _Restangular_) {
