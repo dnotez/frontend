@@ -9,7 +9,7 @@ gulp.task('wiredep', function () {
   return gulp.src('src/index.html')
     .pipe(wiredep({
       directory: 'bower_components',
-      exclude: [/foundation\.js/, /foundation\.css/, /bootstrap\.css/, /foundation\.css/]
+      exclude: [/foundation\.js/, /foundation\.css/, /bootstrap\.css/, /foundation\.css/, /foundation-icons\.css/]
     }))
     .pipe(gulp.dest('src'));
 });

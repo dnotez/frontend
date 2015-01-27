@@ -1,5 +1,5 @@
 angular.module "dNotez", ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'restangular', 'ui.router',
-                          'mm.foundation', 'gridster', 'strip-packer']
+                          'mm.foundation', 'gridster', 'angularMoment', 'strip-packer']
 .config ($stateProvider, $urlRouterProvider) ->
   $stateProvider
   .state "home",

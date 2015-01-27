@@ -1,25 +1,21 @@
 <div class="row-fluid">
-  <div gridster>
+  <div data-gridster="gridsterOpts">
     <ul>
-      <li gridster-item="note" ng-repeat="note in notes">
-        <p><strong data-ng-bind-html="note.item.title"></strong></p>
+      <li data-gridster-item="note" data-ng-repeat="note in userNotes">
+        <p><strong data-ng-bind-html="note.item.title"></strong>
+        <span class="label secondary radius"
+              data-ng-attr-title="{{note.item.saveDate | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}"
+              data-am-time-ago="note.item.saveDate"></span> <span
+            class="label" data-ng-bind="note.item.label" data-ng-show="note.item.label"></span></p>
 
-        <p><span class="label" data-ng-bind="note.item.label" data-ng-show="note.item.label"></span></p>
-
-        <p data-ng-bind-html="note.item.body"></p>
+        <p data-ng-bind-html="note.item.body" class="note-body"></p>
 
         <p><a ng-href="{{note.item.url}}">{{note.item.url}}</a></p>
 
-        <div>
-          w:<span data-ng-bind="note.sizeX"></span>,
-          h:<span data-ng-bind="note.sizeY"></span>
-          , row:<span data-ng-bind="note.row"></span>
-          , col:<span data-ng-bind="note.col"></span>
-        </div>
-        <div class="button-bar right-aligned">
-          <ul class="button-group">
-            <li><a class="button tiny"><i class="fa fa-edit"></i> Edit</a></li>
-            <li><a class="button tiny"><i class="fa fa-forward"></i> Forward</a></li>
+        <div class="right-aligned">
+          <ul class="button-group radius">
+            <a href="" data-ng-click="edit(note)" title="Edit" class="button secondary tiny"><i class="fi-page-edit"></i></a>
+            <a href="" data-ng-click="remove(note)" title="Remove" class="button secondary tiny"><i class="fi-x-circle"></i></a>
           </ul>
         </div>
       </li>

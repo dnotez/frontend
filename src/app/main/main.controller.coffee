@@ -1,7 +1,8 @@
 angular.module "dNotez"
 .controller "MainCtrl", ['$scope', 'Restangular', 'StripPacker', ($scope, Restangular, StripPacker) ->
-  $scope.notes = [
-  ]
+  $scope.userNotes = {
+    results: []
+  }
 
   calcDimension = (note) ->
     if note.item.body.length > 300
@@ -17,18 +18,31 @@ angular.module "dNotez"
 
     return
 
-  Restangular.allUrl 'notes', '/api/articles'
+  Restangular.all 'notes'
   .getList {pageSize: 20}
   .then (notes) ->
     for note,index in notes
       calcDimension(note)
-      console.log index + ': [w,h] =' + note.sizeX + ',' + note.sizeY
-    $scope.notes = StripPacker.pack(notes)
+    $scope.userNotes = StripPacker.pack(notes)
+
+    return
+
+  $scope.edit = (note) ->
+    console.log 'editing note:'+note.item.id
+    return
+
+  $scope.remove = (note) ->
+    Restangular.one('notes', note.item.id).remove().then () ->
+      index = $scope.userNotes.indexOf note
+      if index > -1
+        $scope.userNotes.splice index, 1
+        $scope.userNotes =  StripPacker.pack($scope.userNotes)
+      return
     return
 
   $scope.gridsterOpts = {
-    margins: [20, 20],
-    outerMargin: false,
+    margins: [10, 10],
+    outerMargin: true,
     pushing: true,
     floating: true,
     draggable: {
