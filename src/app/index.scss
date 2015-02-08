@@ -30,12 +30,10 @@
   padding: 10px;
 }
 
-.right-aligned {
+.fixed-pos {
   position: absolute;
   display: block;
-  right: 3px;
-  top: 2px;
-  opacity: 0.15;
+  opacity: 0.20;
   margin:0;
   padding:0;
 
@@ -44,7 +42,18 @@
   }
 }
 
+.top-right{
+  right: 3px;
+  top: 2px;
+}
+
+.bottom-right {
+  right: 3px;
+  bottom: 2px;
+}
+
 .note-body {
+  overflow: hidden;
   code {
     display: inline-block;
     width: 100%;

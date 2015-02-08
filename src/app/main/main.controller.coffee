@@ -6,10 +6,14 @@ angular.module "dNotez"
 
   calcDimension = (note) ->
     if note.item.body.length > 300
-      if note.item.body.length > 500
+      #cut the text to avoid height overflow
+      #first check by lines
+      lines = note.item.body.split(/<P>|<CODE>|<H1>|<H2>|<H3>|<H4>|<H5>|<PRE>|<BR>|<DIV>|\r\n|\r|\n/)
+      if lines.length > 20
         note.item.longText = true
         note.item.fullText = note.item.body
-        note.item.body = note.item.body.substring(0, 500)
+        #todo: check length of text of each line to avoid overflow
+        note.item.body = lines.slice(0, 18).join('\r\n')
       note.sizeX = 3
       note.sizeY = 2
     else

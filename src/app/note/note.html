@@ -1,0 +1,9 @@
+<div class="row-fluid">
+  <p><strong data-ng-bind-html="note.title"></strong><span
+    class="label secondary radius"
+    data-ng-attr-title="{{note.saveDate | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}"
+    data-am-time-ago="note.item.saveDate"></span> <span
+    class="label" data-ng-bind="note.item.label" data-ng-show="note.item.label"></span></p>
+
+  <div data-ng-bind-html="note.body"></div>
+</div>

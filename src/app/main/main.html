@@ -12,11 +12,14 @@
 
         <p><a ng-href="{{note.item.url}}">{{note.item.url}}</a></p>
 
-        <div class="right-aligned">
+        <div class="fixed-pos top-right">
           <ul class="button-group radius">
             <a href="" data-ng-click="edit(note)" title="Edit" class="button secondary tiny"><i class="fi-page-edit"></i></a>
             <a href="" data-ng-click="remove(note)" title="Remove" class="button secondary tiny"><i class="fi-x-circle"></i></a>
           </ul>
+        </div>
+        <div class="fixed-pos bottom-right" data-ng-show="note.item.longText">
+          <a data-ng-href="#/note/{{note.item.id}}" class="button tiny warning">View full text</a>
         </div>
       </li>
     </ul>

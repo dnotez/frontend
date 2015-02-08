@@ -6,6 +6,10 @@ angular.module "dNotez", ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 're
     url: "/",
     templateUrl: "app/main/main.html",
     controller: "MainCtrl"
+  .state "note",
+    url: "/note/:noteId",
+    templateUrl: "app/note/note.html",
+    controller: "NoteCtrl"
   .state "profile",
     url: "/profile",
     templateUrl: "app/profile/profile.html",
